@@ -124,8 +124,8 @@ class _LoginState extends State<Login> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(40, 20, 40, 0),
                     child: TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
+                      controller: _passwordController,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         icon: Icon(

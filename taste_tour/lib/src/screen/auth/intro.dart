@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taste_tour/src/screen/auth/login.dart';
 import 'package:taste_tour/src/screen/home.dart';
 
 class Intro extends StatelessWidget {
@@ -41,9 +42,11 @@ class Intro extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     //시작하기를 클릭하면 홈화면 창으로 이동
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Home(),
-                    ));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const Home(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xffFF6363),
@@ -61,7 +64,16 @@ class Intro extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('이미 계정이 있나요? '),
-                  TextButton(onPressed: () {}, child: const Text('로그인'))
+                  TextButton(
+                      onPressed: () {
+                        // 로그인을 클릭하면 로그인 창으로 이동
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ),
+                        );
+                      },
+                      child: const Text('로그인'))
                 ],
               )
             ],
