@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taste_tour/src/screen/auth/login.dart';
+import 'package:taste_tour/src/screen/auth/register.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
