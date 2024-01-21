@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taste_tour/src/home.dart';
+import 'package:taste_tour/src/screen/home.dart';
 
 class Intro extends StatelessWidget {
   const Intro({super.key});
