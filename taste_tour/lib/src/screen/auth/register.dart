@@ -16,23 +16,23 @@ class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final RegExp emailRegex =
       RegExp(r'^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
 
   // 회원가입 완료 버튼을 누를 때 동작할 함수
-  _submitForm() async {
+  void _submitForm() async {
     if (_formkey.currentState!.validate()) {
-      /* 현재 폼에서 별다른 오류가 없을때  */
-      final String email = _emailController.text; // 이메일 값
-      final String password = _passwordController.text; // 비밀번호 값
-      final String name = _nameController.text; // 이름 값
-      // TODO : 회원가입 통신 로직
-      bool result = await userController.register(email, name, password);
-
-      /* TODO : 회원가입 성공시 다음 화면 (메인)으로 이동처리 */
+      final String memberEmail = _emailController.text;
+      final String memberPassword = _passwordController.text;
+      final String memberName = _nameController.text;
+      final String memberPhone = _phoneController.text;
+      print(
+          "register" + memberName + memberEmail + memberPassword + memberPhone);
+      bool result = await userController.register(
+          memberName, memberEmail, memberPhone, memberPassword);
       if (result) {
         Get.offAll(() => const Home());
-        // offAll => 이전에 들어갔던 창 전부 지워버리고 들어가는거래용
       }
     }
   }
@@ -176,6 +176,7 @@ class _RegisterState extends State<Register> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(40, 20, 40, 20),
                     child: TextFormField(
+                      controller: _phoneController,
                       // 이거 어떻게 뜨는지 궁금한데..
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(

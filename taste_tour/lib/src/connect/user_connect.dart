@@ -1,19 +1,40 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../shared/global.dart';
+
+final GetStorage _storage = GetStorage();
 
 // 회원 관련된 통신을 담당하는 클래스
 class UserConnect extends GetConnect {
-  final GetStorage _storage = GetStorage();
-  // 회원가입 통신
-  Future sendRegister(String email, String name, String password) async {
-    Response response = await post('/api/user/register', {
-      'email': email,
-      'name': name,
-      'password': password,
+  @override
+  void onInit() {
+    allowAutoSignedCert = true;
+    httpClient.baseUrl = Global.apiRoot;
+    httpClient.addRequestModifier<void>((request) {
+      request.headers['Accept'] = 'application/json';
+      return request;
     });
+    super.onInit();
+  }
 
+  // 회원가입 통신
+  Future sendRegister(String memberName, String memberEmail, String memberPhone,
+      String memberPassword) async {
+    print("user_connect" +
+        memberName +
+        memberEmail +
+        memberPassword +
+        memberPhone);
+    Response response = await post(
+      '/user/register',
+      {
+        'memberName': memberName,
+        'memberEmail': memberEmail,
+        'memberPhone': memberPhone,
+        'memberPassword': memberPassword
+      },
+    );
+    print(response.bodyString);
     Map<String, dynamic> body = response.body;
 
     if (body['result'] == 'fail') {
@@ -23,10 +44,11 @@ class UserConnect extends GetConnect {
   }
 
   // 로그인 통신
-  Future sendLogin(String email, String password) async {
-    Response response =
-        await post('/api/user/login', {'email': email, 'password': password});
+  Future sendLogin(String memberEmail, String memberPassword) async {
+    Response response = await post('/user/login',
+        {'memberEmail': memberEmail, 'memberPassword': memberPassword});
     Map<String, dynamic> body = response.body;
+    print("user_connect" + memberEmail + memberPassword);
 
     if (body['result'] == 'fail') {
       throw Exception(body['message']);
@@ -47,16 +69,5 @@ class UserConnect extends GetConnect {
 
   get getToken async {
     return _storage.read("accessToken");
-  }
-
-  @override
-  void onInit() {
-    allowAutoSignedCert = true;
-    httpClient.baseUrl = Global.apiRoot;
-    httpClient.addRequestModifier<void>((request) {
-      request.headers['Accept'] = 'application/json';
-      return request;
-    });
-    super.onInit();
   }
 }

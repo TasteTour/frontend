@@ -19,9 +19,11 @@ class UserController extends GetxController {
   }
 
   // 회원가입을 시도하는 합수, connect호출
-  Future<bool> register(String email, String name, String password) async {
+  Future<bool> register(String memberName, String memberEmail,
+      String memberPhone, String memberPassword) async {
     try {
-      String token = await userConnection.sendRegister(email, name, password);
+      String token = await userConnection.sendRegister(
+          memberName, memberEmail, memberPhone, memberPassword);
       await _storage.write('access_token', token);
       return true;
     } catch (e) {
@@ -35,9 +37,10 @@ class UserController extends GetxController {
   }
 
   // 로그인을 시도하는 함수, connect호출
-  Future login(String email, String password) async {
+  Future login(String memberEmail, String memberPassword) async {
     try {
-      String token = await userConnection.sendLogin(email, password);
+      String token =
+          await userConnection.sendLogin(memberEmail, memberPassword);
       await _storage.write('access_token', token);
       return true;
     } catch (e) {

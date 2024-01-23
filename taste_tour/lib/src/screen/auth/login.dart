@@ -22,11 +22,12 @@ class _LoginState extends State<Login> {
   // 로그인 완료 버튼을 누를 때 동작할 함수
   _submitForm() async {
     if (_formkey.currentState!.validate()) {
-      final String email = _emailController.text;
-      final String password = _passwordController.text;
+      final String memberEmail = _emailController.text;
+      final String memberPassword = _passwordController.text;
+      print("login" + memberEmail + memberPassword);
 
       // 로그인 통신 로직
-      bool result = await userController.login(email, password);
+      bool result = await userController.login(memberEmail, memberPassword);
 
       // 로그인 성공시 다음 화면 (메인)으로 이동처리
       if (result) {
