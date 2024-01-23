@@ -65,18 +65,7 @@ class UserConnect extends GetConnect {
     return body['data']['Authorization'];
   }
 
-  // 나의 정보 통신
-  Future<Map> getMyInfo() async {
-    Response response = await get('/api/user/mypage',
-        headers: {'Authorization': 'Bearer ${await getToken}'});
-    Map<String, dynamic> body = response.body;
-    if (body['result'] == 'fail') {
-      throw Exception(body['message']);
-    }
-    return body;
-  }
-
   get getToken async {
-    return _storage.read("accessToken");
+    return _storage.read("access_token");
   }
 }
