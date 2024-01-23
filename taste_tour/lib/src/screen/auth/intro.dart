@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taste_tour/src/screen/auth/login.dart';
 import 'package:taste_tour/src/screen/auth/register.dart';
+import 'package:taste_tour/src/screen/feed/feed_list.dart';
+import 'package:taste_tour/src/screen/home.dart';
 
 class Intro extends StatelessWidget {
   const Intro({super.key});
@@ -69,7 +71,7 @@ class Intro extends StatelessWidget {
                         // 로그인을 클릭하면 로그인 창으로 이동
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const Login(),
+                            builder: (context) => const Home(),
                           ),
                         );
                       },

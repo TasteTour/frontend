@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taste_tour/src/screen/feed/feed_list.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -26,7 +27,7 @@ class Home extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            Center(child: Text('page1')),
+            FeedList(),
             Center(child: Text('page2')),
             Center(child: Text('page3')),
             Center(child: Text('page4')),
