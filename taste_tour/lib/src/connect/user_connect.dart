@@ -37,6 +37,10 @@ class UserConnect extends GetConnect {
     Map<String, dynamic> body = response.body;
     print(response.bodyString);
 
+    _storage.write("memberName", body['data']['memberName']);
+    _storage.write("memberEmail", body['data']['memberEmail']);
+    _storage.write("memberPhone", body['data']['memberPhone']);
+
     if (body['code'] != 201) {
       throw Exception(body['message']);
     }
@@ -50,6 +54,10 @@ class UserConnect extends GetConnect {
     Map<String, dynamic> body = response.body;
     print("user_connect" + memberEmail + memberPassword);
     print(body['data']['Authorization']);
+
+    _storage.write("memberName", body['data']['memberName']);
+    _storage.write("memberEmail", body['data']['memberEmail']);
+    _storage.write("memberPhone", body['data']['memberPhone']);
 
     if (body['code'] != 200) {
       throw Exception(body['message']);
