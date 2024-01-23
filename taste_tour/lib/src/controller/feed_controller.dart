@@ -9,6 +9,30 @@ class FeedController extends GetxController {
 
   final feedConnection = Get.put(FeedConnect());
 
+  Future readLatestBoard() async {
+    try {
+      List<dynamic> boards = await feedConnection.readLatestBoard();
+      return boards;
+    }
+    catch(e){
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+  Future readPopularBoard() async {
+    try {
+      List<dynamic> boards = await feedConnection.readPopularBoard();
+      return boards;
+    }
+    catch(e){
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
   Future readMyBoard() async {
     try {
       List<dynamic> boards = await feedConnection.readMyBoard();

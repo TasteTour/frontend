@@ -4,7 +4,8 @@ import '../../widget/feed_list_item.dart';
 
 class feedBox extends StatelessWidget {
   final List<dynamic> myBoards;
-  const feedBox(this.myBoards, {super.key});
+  final int onePageBoardCount;
+  const feedBox(this.onePageBoardCount, this.myBoards, {super.key});
 
   static int boardsLength = 0;
 
@@ -20,12 +21,12 @@ class feedBox extends StatelessWidget {
 
   Widget buildPages() {
     return Container(
-      height: 595,
+      height: onePageBoardCount * 120, // TODO 높이는 좀 조정해보세요
       child: PageView.builder(
-        itemCount: (myBoards.length / 5).ceil(), // 한 페이지에 5개씩 렌더링
+        itemCount: (myBoards.length / onePageBoardCount).ceil(), // 한 페이지에 5개씩 렌더링
         itemBuilder: (context, pageIndex) {
-          int startIndex = pageIndex * 5;
-          int endIndex = (startIndex + 5 < myBoards.length) ? startIndex + 5 : myBoards.length;
+          int startIndex = pageIndex * onePageBoardCount;
+          int endIndex = (startIndex + onePageBoardCount < myBoards.length) ? startIndex + onePageBoardCount : myBoards.length;
 
           List<dynamic> pageItems = myBoards.sublist(startIndex, endIndex);
 
@@ -38,6 +39,7 @@ class feedBox extends StatelessWidget {
   Widget buildPage(List<dynamic> items) {
     return Column(
       children: items.map((item) {
+        // 하나의 글 정보를 전달해서 사용함
         return FeedListItem(item: item);
       }).toList(),
     );

@@ -132,7 +132,7 @@ class _mypageState extends State<mypage> {
                               if (snapshot.connectionState == ConnectionState.done) {
                                 if (snapshot.hasData) {
                                   List<dynamic> myboard = snapshot.data as List<dynamic>;
-                                  return feedBox(myboard);
+                                  return feedBox(5, myboard);
                                 } else if (snapshot.hasError) {
                                   // 에러 처리
                                   return Text('Error: ${snapshot.error}');
