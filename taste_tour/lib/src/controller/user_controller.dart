@@ -10,6 +10,7 @@ final GetStorage _storage = GetStorage();
 class UserController extends GetxController {
   // UserConnect 객체를 생성 (의존성 주입)
   final userConnection = Get.put(UserConnect());
+
   UserModel? user;
 
   // 로그인이 되어있는지 판단
@@ -27,11 +28,8 @@ class UserController extends GetxController {
       await _storage.write('access_token', token);
       return true;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(
-          content: Text('$e'),
-        ),
-      );
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
       return false;
     }
   }
@@ -39,16 +37,12 @@ class UserController extends GetxController {
   // 로그인을 시도하는 함수, connect호출
   Future login(String memberEmail, String memberPassword) async {
     try {
-      String token =
-          await userConnection.sendLogin(memberEmail, memberPassword);
+      String token = await userConnection.sendLogin(memberEmail, memberPassword);
       await _storage.write('access_token', token);
       return true;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(
-          content: Text('$e'),
-        ),
-      );
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
       return false;
     }
   }
