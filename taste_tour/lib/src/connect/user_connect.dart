@@ -37,6 +37,10 @@ class UserConnect extends GetConnect {
     Map<String, dynamic> body = response.body;
     print(response.bodyString);
 
+    _storage.write("memberName", body['data']['memberName']);
+    _storage.write("memberEmail", body['data']['memberEmail']);
+    _storage.write("memberPhone", body['data']['memberPhone']);
+
     if (body['code'] != 201) {
       throw Exception(body['message']);
     }
@@ -51,24 +55,17 @@ class UserConnect extends GetConnect {
     print("user_connect" + memberEmail + memberPassword);
     print(body['data']['Authorization']);
 
+    _storage.write("memberName", body['data']['memberName']);
+    _storage.write("memberEmail", body['data']['memberEmail']);
+    _storage.write("memberPhone", body['data']['memberPhone']);
+
     if (body['code'] != 200) {
       throw Exception(body['message']);
     }
     return body['data']['Authorization'];
   }
 
-  // 나의 정보 통신
-  Future<Map> getMyInfo() async {
-    Response response = await get('/api/user/mypage',
-        headers: {'Authorization': 'Bearer ${await getToken}'});
-    Map<String, dynamic> body = response.body;
-    if (body['result'] == 'fail') {
-      throw Exception(body['message']);
-    }
-    return body;
-  }
-
   get getToken async {
-    return _storage.read("accessToken");
+    return _storage.read("access_token");
   }
 }
