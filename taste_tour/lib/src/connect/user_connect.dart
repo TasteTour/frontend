@@ -34,13 +34,13 @@ class UserConnect extends GetConnect {
         'memberPassword': memberPassword
       },
     );
-    print(response.bodyString);
     Map<String, dynamic> body = response.body;
+    print(response.bodyString);
 
-    if (body['result'] == 'fail') {
+    if (body['code'] != 201) {
       throw Exception(body['message']);
     }
-    return body['access_token'];
+    return body['data']['token'];
   }
 
   // 로그인 통신
@@ -49,11 +49,12 @@ class UserConnect extends GetConnect {
         {'memberEmail': memberEmail, 'memberPassword': memberPassword});
     Map<String, dynamic> body = response.body;
     print("user_connect" + memberEmail + memberPassword);
+    print(body['data']['Authorization']);
 
-    if (body['result'] == 'fail') {
+    if (body['code'] != 200) {
       throw Exception(body['message']);
     }
-    return body['access_token'];
+    return body['data']['Authorization'];
   }
 
   // 나의 정보 통신

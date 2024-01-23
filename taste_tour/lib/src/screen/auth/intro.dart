@@ -41,7 +41,7 @@ class Intro extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    //시작하기를 클릭하면  창으로 이동
+                    //시작하기를 클릭하면 홈화면 창으로 이동
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const Register(),
