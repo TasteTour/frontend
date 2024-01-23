@@ -16,7 +16,6 @@ class FeedListItem extends StatelessWidget {
     final String boardCreated = item['boardCreated'];
     final int boardComment = item['boardComment'];
 
-
     return Column(
       children: [
         Row(
@@ -32,6 +31,7 @@ class FeedListItem extends StatelessWidget {
                       children: [
                         Text(
                           "$boardTitle",
+
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
