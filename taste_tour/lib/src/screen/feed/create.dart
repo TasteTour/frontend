@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../shared/global.dart';
+import '../home.dart';
 
 final FeedController feedController = Get.put(FeedController());
 
@@ -42,11 +43,14 @@ class _CreateState extends State<Create> {
       // final String boardCategory = _boardCategoryController.text;
       print('별점: $boardStar');
       //피드 작성 로직
-      /* bool result = await feedController.feedCreate(boardTitle, boardContent,
+      bool result = await feedController.feedCreate(boardTitle, boardContent,
           boardStoreLocation, boardCategory, boardStar, fileid);
       if (result) {
-        Get.back();
-      } */
+        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+          content: Text("글 등록 되었습니다!"),
+        ));
+        Get.offAll(() => const Home());
+      }
     }
   }
 

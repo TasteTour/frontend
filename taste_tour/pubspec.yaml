@@ -63,6 +63,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/logo.png
+    - asset/map.png
+    - asset/profile.jpg
     - asset/asianFood.png
     - asset/chineaseFood.png
     - asset/fastFood.png
@@ -70,6 +72,7 @@ flutter:
     - asset/three-dots.png
     - asset/westernFood.png
     - asset/koreanFood.png
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

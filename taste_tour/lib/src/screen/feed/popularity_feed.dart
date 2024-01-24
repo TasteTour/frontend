@@ -90,7 +90,11 @@ class _PopularityFeedState extends State<PopularityFeed> {
                           }
                         }
 
-                        return CircularProgressIndicator();
+                        return Column(children: [
+                          const SizedBox(height: 50),
+                          Container(
+                              width: 50, height: 50, child: CircularProgressIndicator())
+                        ]);
                       },
                     ),
                   ),
