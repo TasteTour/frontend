@@ -98,7 +98,7 @@ class FeedController extends GetxController {
       await Future.delayed(Duration(seconds: 1));
 
       return comments;
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
@@ -116,7 +116,22 @@ class FeedController extends GetxController {
     }
   }
 
-Future<bool> feedCreate(
+  Future searchBoard(searchKeyword) async {
+    try {
+      List<dynamic> boards = await feedConnection.searchBoard(searchKeyword);
+      Iterator<dynamic> iterator = boards.iterator;
+      List<FeedModel> feeds = [];
+      while (iterator.moveNext()) {
+        // 각 리스트의 현재 요소 출력
+        feeds.add(FeedModel.fromJson(iterator.current));
+      }
+      return feeds;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<bool> feedCreate(
       String boardTitle,
       String boardContent,
       String boardStoreLocation,
