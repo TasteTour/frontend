@@ -5,6 +5,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:taste_tour/src/controller/user_controller.dart';
 import 'package:taste_tour/src/screen/home.dart';
 
+import 'mypage.dart';
+
 class update_password extends StatefulWidget {
   const update_password({super.key});
 
@@ -18,7 +20,8 @@ class _update_passwordState extends State<update_password> {
   final TextEditingController _lastMemberPasswordController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // 비밀번호 변경 버튼을 누를 때 동작할 함수
+
+  // 변경 버튼을 누를 때 동작할 함수
   _submitForm() async {
     if (_formkey.currentState!.validate()) {
       final String lastMemberPassword = _lastMemberPasswordController.text;
@@ -32,7 +35,9 @@ class _update_passwordState extends State<update_password> {
 
       // 로그인 성공시 다음 화면 (메인)으로 이동처리
       if (result) {
-        Get.offAll(() => const Home());
+        Get.offAll(() => const mypage());
+        // Get.offAll(() => const Home());
+        // setState(() {});
       }
     }
   }

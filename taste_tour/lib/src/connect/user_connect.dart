@@ -69,20 +69,13 @@ class UserConnect extends GetConnect {
 
   // 비밀번호 변경하기
   Future updatePassword(String lastMemberPassword, String memberPassword) async {
-    // Response response = await put('/user/mypage/change/password',
-    //     headers: {
-    //       'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Im1lbWJlck51bWJlciI6MTMsIm1lbWJlck5hbWUiOiLsobDtmJXspIAifSwiaWF0IjoxNzA2MTA5MDEzLCJleHAiOjE3MDYxMzA2MTN9.iHB6U6rby-dq3eE6ALu9DzaO8MgbZvdE2jhK7oRwzNM',
-    //       },
-    //     body: json.encode({'lastMemberPassword': lastMemberPassword, 'memberPassword': memberPassword }));
-
-    Response response = await put('/user/mypage/change/password?lastMemberPassword=$lastMemberPassword&memberPassword=$memberPassword',
-        headers: {
-          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Im1lbWJlck51bWJlciI6MTMsIm1lbWJlck5hbWUiOiLsobDtmJXspIAifSwiaWF0IjoxNzA2MTA5MDEzLCJleHAiOjE3MDYxMzA2MTN9.iHB6U6rby-dq3eE6ALu9DzaO8MgbZvdE2jhK7oRwzNM',
-        },
+    // print("get Token" + getToken);
+    Response response = await put('/user/mypage/change/password', {'lastMemberPassword': lastMemberPassword, 'memberPassword': memberPassword},
+      headers: {
+        'Authorization': await getToken,
+      },
     );
 
-    // Cannot GET /user/mypage/change/password 오류 발생
-    print(response.body);
     Map<String, dynamic> body = response.body;
 
     if (body['code'] != 200) {

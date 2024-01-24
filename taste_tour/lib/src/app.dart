@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         // home: isLogin ? const Home(): const Intro()
-      home: update_password(),
-      // home: Login(),
+      // home: update_password(),
+      home: Intro(),
       // home: mypage(),
     );
   }

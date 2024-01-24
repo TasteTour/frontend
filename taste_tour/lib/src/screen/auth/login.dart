@@ -4,6 +4,8 @@ import 'package:taste_tour/src/controller/user_controller.dart';
 import 'package:taste_tour/src/screen/home.dart';
 import 'package:flutter/src/painting/border_radius.dart';
 
+import '../mypage/mypage.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -31,7 +33,8 @@ class _LoginState extends State<Login> {
 
       // 로그인 성공시 다음 화면 (메인)으로 이동처리
       if (result) {
-        Get.offAll(() => const Home());
+        // Get.offAll(() => const Home());
+        Get.offAll(() => const mypage());
       }
     }
   }

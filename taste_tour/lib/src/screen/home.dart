@@ -72,6 +72,8 @@ class _HomeState extends State<Home> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasData) {
+                            // snapshot은 Future의 결과
+                            print(snapshot.data); // false 출력됨
                             List<dynamic> myboard =
                                 snapshot.data as List<dynamic>;
                             // feedBox (한 페이지에 출력할 글 갯수, 글 List 형태)

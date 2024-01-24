@@ -45,7 +45,8 @@ class _mypageState extends State<mypage> {
 
               // First Container
               Container(
-                height: 290,
+                // height 값을 고정해놔서 A RenderFlex overflowed by 99410 pixels on the bottom. 오류 발생 한거
+                // height: 290,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
