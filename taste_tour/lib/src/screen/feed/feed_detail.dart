@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:taste_tour/src/model/feed_model.dart';
+
+import '../../shared/global.dart';
 
 class FeedDetail extends StatefulWidget {
-  const FeedDetail({super.key});
+  final FeedModel item;
+  const FeedDetail(this.item, {super.key});
 
   @override
-  State<FeedDetail> createState() => _FeedDetailState();
+  State<FeedDetail> createState() => _FeedDetailState(this.item);
 }
 
 class _FeedDetailState extends State<FeedDetail> {
+  final FeedModel item;
+  _FeedDetailState(this.item);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +28,7 @@ class _FeedDetailState extends State<FeedDetail> {
               children: [
                 // const SizedBox(height: 15),
                 Container(
-                  height: 290,
+                  height: 320,
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -42,24 +50,68 @@ class _FeedDetailState extends State<FeedDetail> {
                       children: [
                         Row(
                           children: [
-                            Text("")
+                            Text("${item.boardTitle}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                            SizedBox(width: 30),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
+                              height: 20,width: 60,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 99, 99, 1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: DefaultTextStyle(
+                                child: Text(
+                                  '${item.boardCategory}',
+                                ),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                            ),
                           ],
-                        )
+                        ),
+                        RatingBar.builder(
+                          itemSize: 23,
+                          itemBuilder: (Context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {},
+                          direction: Axis.horizontal,
+                          // 여기에 입력된 평점 수 알려주면 될 듯
+                          initialRating: item.boardStar.toDouble(),
+                          ignoreGestures: true,
+                        ),
+                        SizedBox(height: 15),
+                        Text("작성자 : ${item.memberName}"),
+                        Text("작성 날짜 : ${item.boardCreated}"),
+                        SizedBox(height: 15),
+                        Text("${item.boardContent}"),
+                        SizedBox(height: 10),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network('${Global.apiRoot}/file/${item.boardNumber}', width: 100, height: 100, errorBuilder: (context, error, stackTrace) {
+                            return Image.network('${Global.apiRoot}/file/${item.boardNumber}', width: 100, height: 100);
+                          }),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: 50),
                 Container(
                   height: 700,
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(25),
                     child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        ),
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
                   ),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -73,10 +125,10 @@ class _FeedDetailState extends State<FeedDetail> {
                         )
                       ]),
                 )
-              ],
-            )
-          ]),
-        )
+              ],)
+          ]
+          ),)
     );
   }
 }
+

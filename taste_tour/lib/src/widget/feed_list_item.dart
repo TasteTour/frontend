@@ -6,7 +6,6 @@ import 'package:taste_tour/src/model/feed_model.dart';
 
 class FeedListItem extends StatelessWidget {
   final FeedModel item;
-
   FeedListItem({required this.item});
 
   @override
@@ -66,6 +65,7 @@ class FeedListItem extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
                       height: 20,
+                      width: 60,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(255, 99, 99, 1),
                         borderRadius: BorderRadius.circular(20),
@@ -80,6 +80,7 @@ class FeedListItem extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
+                      alignment: Alignment.center,
                     ),
                     const SizedBox(
                       height: 6,

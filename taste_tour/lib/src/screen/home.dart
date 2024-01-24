@@ -83,14 +83,39 @@ class _HomeState extends State<Home> {
                         }
 
                         // 로딩 중일 때 반환할 위젯
-                        return CircularProgressIndicator();
+                        return Column(children: [
+                          const SizedBox(height: 150),
+                          Container(
+                              width: 50, height: 50, child: CircularProgressIndicator())
+                        ]);
                       },
                     ),
                   ),
                 ),
               ),
             ]),
-            FeedDetail(),
+            FutureBuilder(
+              future: myBoards,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    List<dynamic> myboard = snapshot.data as List<dynamic>;
+                    // feedBox (한 페이지에 출력할 글 갯수, 글 List 형태)
+                    return FeedDetail(myboard[12]);
+                  } else if (snapshot.hasError) {
+                    // 에러 처리
+                    return Text('Error: ${snapshot.error}');
+                  }
+                }
+
+                // 로딩 중일 때 반환할 위젯
+                return Column(children: [
+                  const SizedBox(height: 300),
+                  Container(
+                      width: 50, height: 50, child: CircularProgressIndicator())
+                ]);
+              },
+            ),
             Center(child: Text('page3')),
             mypage()
           ],

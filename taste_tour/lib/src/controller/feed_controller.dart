@@ -49,8 +49,13 @@ class FeedController extends GetxController {
   Future readMyBoard() async {
     try {
       List<dynamic> boards = await feedConnection.readMyBoard();
-      print(boards);
-      return boards;
+      Iterator<dynamic> iterator = boards.iterator;
+      List<FeedModel> feeds = [];
+      while (iterator.moveNext()) {
+        // 각 리스트의 현재 요소 출력
+        feeds.add(FeedModel.fromJson(iterator.current));
+      }
+      return feeds;
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
       ));

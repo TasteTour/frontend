@@ -5,6 +5,8 @@ import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/widget/feed_list_item.dart';
 
+import '../../model/feed_model.dart';
+
 final GetStorage _storage = GetStorage();
 
 class mypage extends StatefulWidget {
@@ -16,7 +18,7 @@ class mypage extends StatefulWidget {
 
 class _mypageState extends State<mypage> {
   final feedController = Get.put(FeedController());
-  late Future<dynamic> ?myBoards;
+  late List<FeedModel> ?myBoards;
   int boardCount = 0;
 
   @override

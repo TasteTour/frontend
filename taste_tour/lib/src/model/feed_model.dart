@@ -1,13 +1,10 @@
-import 'dart:ffi';
-
 class FeedModel {
   FeedModel(){
-
   }
 
   int? boardNumber;
   String? boardTitle;
-  int? boardStar;
+  int boardStar = 0;
   String? boardCategory;
   String? boardStoreLocation;
   String? boardContent;
@@ -37,6 +34,7 @@ class FeedModel {
     boardContent = m['boardContent'];
     boardViews = m['boardViews'];
     boardCreated = m['boardCreated'];
+    boardCreated = boardCreated?.substring(0, boardCreated?.indexOf("T"));
     boardUpdated = m['boardUpdated'];
     boardComment = m['boardComment'];
     memberNumber = m['memberNumber'];
