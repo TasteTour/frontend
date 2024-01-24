@@ -34,17 +34,17 @@ class UserConnect extends GetConnect {
         'memberPassword': memberPassword
       },
     );
-    // Map<String, dynamic> body = response.body;
     print(response.bodyString);
+    Map<String, dynamic> body = response.body;
 
-    // _storage.write("memberName", body['data']['memberName']);
-    // _storage.write("memberEmail", body['data']['memberEmail']);
-    // _storage.write("memberPhone", body['data']['memberPhone']);
+    _storage.write("memberName", body['data']['memberName']);
+    _storage.write("memberEmail", body['data']['memberEmail']);
+    _storage.write("memberPhone", body['data']['memberPhone']);
 
-    // if (body['code'] != 201) {
-    //   throw Exception(body['message']);
-    // }
-    // return body['data']['token'];
+    if (body['code'] != 201) {
+      throw Exception(body['message']);
+    }
+    return body['data']['token'];
   }
 
   // 로그인 통신
