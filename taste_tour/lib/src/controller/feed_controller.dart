@@ -19,6 +19,7 @@ class FeedController extends GetxController {
         feeds.add(FeedModel.fromJson(iterator.current));
       }
       return feeds;
+
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
         content: Text("$e"),
@@ -58,5 +59,32 @@ class FeedController extends GetxController {
     }
   }
 
+  Future<bool> feedCreate(
+      String boardTitle,
+      String boardContent,
+      String boardStoreLocation,
+      String boardCategory,
+      double boardStar,
+      int? imageId) async {
+    try {
+      await feedConnect.storeItem(boardTitle, boardStar, boardCategory,
+          boardStoreLocation, boardContent,
+          imageId: imageId);
+      await feedConnect.imageUpload; //이미지 보내기 함수 확인하기
+      //await Home(); //이동
+      return true;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+//image upload 함수 확인
+  Future<int> upload(String name, String path) async {
+    Map data = await feedConnect.imageUpload(name, path);
+    return data['id'];
+  }
 
 }
