@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taste_tour/src/screen/feed/create.dart';
+
 import 'package:taste_tour/src/screen/feed/category.dart';
 import 'package:taste_tour/src/screen/feed/feed_detail.dart';
 import 'package:taste_tour/src/screen/feed/main.dart';
