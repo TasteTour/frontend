@@ -273,14 +273,14 @@ class _CategoryState extends State<Category> {
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 10, 20),
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 20),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
               child: Container(
-                margin: EdgeInsets.fromLTRB(20, 13, 20, 0),
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Column(
                   children: [
                     Row(
@@ -374,7 +374,7 @@ class _CategoryState extends State<Category> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(top: 10),
                           height: 100,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,

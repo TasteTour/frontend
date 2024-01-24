@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/category.dart';
+import 'package:taste_tour/src/screen/feed/create.dart';
 import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/screen/feed/main.dart';
 import 'package:taste_tour/src/screen/mypage/mypage.dart';
@@ -40,7 +41,7 @@ class _LatestFeedState extends State<LatestFeed> {
             tabs: [
               Tab(icon: Icon(Icons.home), text: '홈'),
               Tab(icon: Icon((Icons.category)), text: '카테고리'),
-              Tab(icon: Icon(Icons.location_on_outlined), text: '글 쓰기'),
+              Tab(icon: Icon(Icons.feed), text: '글 쓰기'),
               Tab(icon: Icon(Icons.person_outline), text: '마이페이지'),
             ],
             labelColor: Color(0xffFF6363),
@@ -51,12 +52,12 @@ class _LatestFeedState extends State<LatestFeed> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 7.8,),
+              SizedBox(
+                height: 7.8,
+              ),
               Text(
                 '  최신 게시글',
-                style: TextStyle(
-                    fontSize: 35, fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               Container(
                 child: Padding(
@@ -82,7 +83,7 @@ class _LatestFeedState extends State<LatestFeed> {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasData) {
                             List<dynamic> myboard =
-                            snapshot.data as List<dynamic>;
+                                snapshot.data as List<dynamic>;
                             return feedBox(5, myboard);
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
@@ -100,7 +101,7 @@ class _LatestFeedState extends State<LatestFeed> {
                   children: [
                     Main(),
                     Category(),
-                    Center(child: Text('page3')),
+                    Create(),
                     mypage(),
                   ],
                 ),

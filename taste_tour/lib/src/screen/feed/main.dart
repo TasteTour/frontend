@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/latest_feed.dart';
 import 'package:taste_tour/src/screen/feed/popularity_feed.dart';
 import 'package:taste_tour/src/widget/feed_list_item.dart';
+import 'package:taste_tour/src/widget/feed_list_popularity_item.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -13,6 +16,27 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
+  get item => null;
+
+  Future<dynamic>? myBoards;
+
+  @override
+  void initState() {
+    super.initState();
+    // initState에서 비동기 작업을 수행하고 변수에 할당
+    myBoards = _fetchPopularBoard();
+  }
+
+  Future<dynamic> _fetchPopularBoard() async {
+    final feedController = Get.put(FeedController());
+    final List<dynamic> popularBoards = await feedController.readPopularBoard();
+
+    // popularBoards에서 가장 인기 있는 글 가져오기
+    final mostPopularBoard = popularBoards.first;
+
+    return mostPopularBoard;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,139 +110,7 @@ class _MainState extends State<Main> {
                 ),
               ],
             ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: 200,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 13, 20, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Image.asset('asset/logo.png',
-                                          height: 30.0, width: 30.0),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      const Text(
-                                        '작성자',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        '제목',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      RatingBar.builder(
-                                        itemSize: 20,
-                                        itemBuilder: (Context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (rating) {},
-                                        direction: Axis.horizontal,
-                                        // 여기에 입력된 평점 수 알려주면 될 듯
-                                        initialRating: 3,
-                                        allowHalfRating: true,
-                                        ignoreGestures: true,
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Container(
-                                    height: 48,
-                                    child: const DefaultTextStyle(
-                                      child: Text(
-                                        '내용',
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    child: Image.asset(
-                                      'asset/logo.png',
-                                      height: 50.0,
-                                      width: 50.0,
-                                    ),
-                                  ),
-                                  // 자 이제 여러개면 어떻게 되어야할지 생각을 해야겠지?
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            height: 100,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 10, 1, 0),
-                                  child: Text(
-                                    '2024-01-24',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Color.fromARGB(255, 198, 198, 198),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            FeedListPopularity(item: item),
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class mypage extends StatefulWidget {
 
 class _mypageState extends State<mypage> {
   final feedController = Get.put(FeedController());
-  late Future<dynamic> ?myBoards;
+  late Future<dynamic>? myBoards;
   int boardCount = 0;
 
   @override
@@ -42,7 +42,6 @@ class _mypageState extends State<mypage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
               ),
               const SizedBox(height: 15),
-
               // First Container
               Container(
                 // height 값을 고정해놔서 A RenderFlex overflowed by 99410 pixels on the bottom. 오류 발생 한거
@@ -149,7 +148,7 @@ class _mypageState extends State<mypage> {
                               ConnectionState.done) {
                             if (snapshot.hasData) {
                               List<dynamic> myboard =
-                              snapshot.data as List<dynamic>;
+                                  snapshot.data as List<dynamic>;
                               return feedBox(5, myboard);
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');

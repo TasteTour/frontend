@@ -53,7 +53,7 @@ class _CategoryFeedState extends State<CategoryFeed> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 7.8,
+                height: 2.8,
               ),
               Text(
                 '   ${widget.boardCategory}',
@@ -61,10 +61,11 @@ class _CategoryFeedState extends State<CategoryFeed> {
               ),
               Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(14),
+                  padding: const EdgeInsets.all(10),
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,
+                    height: 700,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),
@@ -84,26 +85,15 @@ class _CategoryFeedState extends State<CategoryFeed> {
                           if (snapshot.hasData) {
                             List<dynamic> myboard =
                                 snapshot.data as List<dynamic>;
-                            return feedBox(5, myboard);
+                            return feedBox(4, myboard);
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           }
                         }
-
                         return CircularProgressIndicator();
                       },
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    Main(),
-                    Category(),
-                    Center(child: Text('page3')),
-                    mypage(),
-                  ],
                 ),
               ),
             ],
