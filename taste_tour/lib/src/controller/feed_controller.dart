@@ -8,30 +8,59 @@ final feedConnect = Get.put(FeedConnect());
 
 class FeedController extends GetxController {
   // 상태관리에서 관리하는 변수
+  final feedConnection = Get.put(FeedConnect());
+
   List<FeedModel> list = [];
-
-  FeedList() async {
-    // FeedConnect를 통해 서버에서부터 List를 가져옴
-    List jsonData = await feedConnect.getList();
-
-    // List<Map>을 모델인 List<Model>로 변경!
-    List<FeedModel> tmp = jsonData.map((m) => FeedModel.parse(m)).toList();
-
-    // 변경된 tmp를 상태 관리 변수 list 에다가 넣어줌
-    list = tmp;
-
-    // UI 업데이트를 알려준다
-    update();
+  Future readLatestBoard() async {
+    try {
+      List<dynamic> boards = await feedConnection.readLatestBoard();
+      return boards;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
   }
 
-  Future<bool> feedCreate(String boardTitle, String boardContent,
-      String boardStoreLocation, String boardCategoru, int? imageId) async {
+  Future readPopularBoard() async {
     try {
-      await feedConnect.storeItem(
-          boardTitle, boardContent, boardStoreLocation, boardCategoru,
+      List<dynamic> boards = await feedConnection.readPopularBoard();
+      return boards;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+  Future readMyBoard() async {
+    try {
+      List<dynamic> boards = await feedConnection.readMyBoard();
+      print(boards);
+      return boards;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+  Future<bool> feedCreate(
+      String boardTitle,
+      String boardContent,
+      String boardStoreLocation,
+      String boardCategory,
+      double boardStar,
+      int? imageId) async {
+    try {
+      await feedConnect.storeItem(boardTitle, boardStar, boardCategory,
+          boardStoreLocation, boardContent,
           imageId: imageId);
       await feedConnect.imageUpload; //이미지 보내기 함수 확인하기
-      await FeedList();
+      //await Home(); //이동
       return true;
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(

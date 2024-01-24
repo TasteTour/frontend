@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/widget/image_button.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,6 @@ class _CreateState extends State<Create> {
   @override
   void initState() {
     super.initState();
-    feedController.FeedList();
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -26,9 +26,10 @@ class _CreateState extends State<Create> {
   final TextEditingController _boardContentController = TextEditingController();
   final TextEditingController _boardStoreLocationController =
       TextEditingController();
-  final TextEditingController _boardCategoryController =
-      TextEditingController();
-  String _selectedCategory = '한식'; // 초기 카테고리 값은 '한식'
+  //final TextEditingController _boardCategoryController =
+  //   TextEditingController();
+  String boardCategory = '한식'; // 초기 카테고리 값은 '한식'
+  double boardStar = 0;
   int? fileid;
   final ImagePicker picker = ImagePicker();
 //작성 버튼을 누를때 동작할 함수
@@ -38,11 +39,11 @@ class _CreateState extends State<Create> {
       final String boardTitle = _boardTitleController.text;
       final String boardStoreLocation = _boardStoreLocationController.text;
       final String boardContent = _boardContentController.text;
-      final String boardCategory = _boardCategoryController.text;
-
+      // final String boardCategory = _boardCategoryController.text;
+      print('별점: $boardStar');
       //피드 작성 로직
-      bool result = await feedController.feedCreate(
-          boardTitle, boardContent, boardStoreLocation, boardCategory, fileid);
+      bool result = await feedController.feedCreate(boardTitle, boardContent,
+          boardStoreLocation, boardCategory, boardStar, fileid);
       if (result) {
         Get.back();
       }
@@ -154,14 +155,14 @@ class _CreateState extends State<Create> {
                       primaryColor: Colors.white,
                     ),
                     child: DropdownButton<String>(
-                      value: _selectedCategory,
+                      value: boardCategory,
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: 24,
                       elevation: 16,
                       style: const TextStyle(color: Colors.black),
                       onChanged: (String? newValue) {
                         setState(() {
-                          _selectedCategory = newValue!;
+                          boardCategory = newValue!;
                         });
                       },
                       items: <String>[
@@ -190,8 +191,20 @@ class _CreateState extends State<Create> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('별점', style: labelTextStyle),
-                  StarRating(),
+                  RatingBar.builder(
+                      initialRating: 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4),
+                      itemBuilder: (context, _) =>
+                          Icon(Icons.star, color: Colors.amber),
+                      onRatingUpdate: (double rating) {
+                        print(rating);
+                        setState(() {
+                          boardStar = rating;
+                        });
+                      })
                 ],
               ),
 
@@ -252,34 +265,6 @@ class _CreateState extends State<Create> {
         ],
       ),
       child: child,
-    );
-  }
-}
-
-class StarRating extends StatefulWidget {
-  @override
-  _StarRatingState createState() => _StarRatingState();
-}
-
-class _StarRatingState extends State<StarRating> {
-  int _rating = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(5, (index) {
-        return IconButton(
-          onPressed: () {
-            setState(() {
-              _rating = index + 1;
-            });
-          },
-          icon: Icon(
-            index < _rating ? Icons.star : Icons.star_border,
-            color: Colors.yellow,
-          ),
-        );
-      }),
     );
   }
 }

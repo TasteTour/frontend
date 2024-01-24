@@ -69,6 +69,6 @@ class UserConnect extends GetConnect {
   }
 
   get getToken async {
-    return _storage.read("accessToken");
+    return _storage.read("access_token");
   }
 }

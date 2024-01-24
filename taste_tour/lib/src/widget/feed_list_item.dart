@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:taste_tour/src/model/feed_model.dart';
 
 class FeedListItem extends StatelessWidget {
-  final FeedModel model;
-  const FeedListItem(this.model, {super.key});
+  final dynamic item;
+  FeedListItem({required this.item});
 
   @override
   Widget build(BuildContext context) {
+    final String boardTitle = item['boardTitle'];
+    final int boardStar = item['boardStar'];
+    final String boardCategory = item['boardCategory'];
+    final String boardStoreLocation = item['boardStoreLocation'];
+    final String boardContent = item['boardContent'];
+    final int boardViews = item['boardViews'];
+    final String boardCreated = item['boardCreated'];
+    final int boardComment = item['boardComment'];
+
     return Column(
       children: [
         Row(
@@ -22,14 +30,14 @@ class FeedListItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          //제목
-                          model.boardTitle ?? '제목없음',
+                          "$boardTitle",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                             color: Colors.black,
                           ),
                         ),
+                        //별점
                         SizedBox(
                           width: 10,
                         ),
@@ -41,8 +49,7 @@ class FeedListItem extends StatelessWidget {
                           ),
                           onRatingUpdate: (rating) {},
                           direction: Axis.horizontal,
-                          // 여기에 입력된 평점 수 알려주면 될 듯
-                          initialRating: 3,
+                          initialRating: boardStar.toDouble(),
                           allowHalfRating: true,
                           ignoreGestures: true,
                         )
@@ -58,9 +65,9 @@ class FeedListItem extends StatelessWidget {
                         color: Color.fromRGBO(255, 99, 99, 1),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const DefaultTextStyle(
+                      child: DefaultTextStyle(
                         child: Text(
-                          '태그',
+                          '$boardCategory',
                         ),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -74,12 +81,12 @@ class FeedListItem extends StatelessWidget {
                     ),
                     Container(
                       child: DefaultTextStyle(
+                        child: Text(
+                          '$boardContent',
+                        ),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.black,
-                        ),
-                        child: Text(
-                          model.boardContent ?? '내용없음',
                         ),
                       ),
                     ),
@@ -93,12 +100,12 @@ class FeedListItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(bottom: 10),
               height: 100,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '5초 전',
+                    '$boardCreated',
                     style: TextStyle(
                       fontSize: 10,
                       color: Color.fromARGB(255, 198, 198, 198),
@@ -108,7 +115,7 @@ class FeedListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '작성자 : dadat6692',
+                        '작성자 : 잠시대기',
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.black,
@@ -125,7 +132,7 @@ class FeedListItem extends StatelessWidget {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            '1',
+                            '$boardComment',
                             style: TextStyle(
                               fontSize: 13,
                               color: Color.fromARGB(255, 198, 198, 198),
@@ -141,7 +148,7 @@ class FeedListItem extends StatelessWidget {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            '1',
+                            '$boardViews',
                             style: TextStyle(
                               fontSize: 13,
                               color: Color.fromARGB(255, 198, 198, 198),
