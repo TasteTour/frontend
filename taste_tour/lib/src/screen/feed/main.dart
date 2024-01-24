@@ -35,7 +35,7 @@ class _MainState extends State<Main> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const PopularityFeed()));
+                            builder: (context) => const LatestFeed()));
                   },
                   icon: Icon(Icons.add_circle_outline),
                 ),
@@ -79,7 +79,7 @@ class _MainState extends State<Main> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LatestFeed()));
+                            builder: (context) => const PopularityFeed()));
                   },
                   icon: Icon(Icons.add_circle_outline),
                 ),

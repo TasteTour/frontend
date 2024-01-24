@@ -10,10 +10,10 @@ class LatestFeed extends StatefulWidget {
   const LatestFeed({super.key});
 
   @override
-  State<LatestFeed> createState() => _PopularrityFeedState();
+  State<LatestFeed> createState() => _LatestFeedState();
 }
 
-class _PopularrityFeedState extends State<LatestFeed> {
+class _LatestFeedState extends State<LatestFeed> {
   final feedController = Get.put(FeedController());
   late Future<dynamic>? myBoards;
   int boardCount = 0;
@@ -27,73 +27,86 @@ class _PopularrityFeedState extends State<LatestFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Image.asset('asset/logo.png', height: 64.0), // 로고 이미지 추가
-        centerTitle: true,
-      ),
-      body: DefaultTabController(
-        length: 4,
-        child: Column(
-          children: [
-            Text(
-              '인기 게시글',
-              style: TextStyle(
-                fontSize: 20,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Image.asset('asset/logo.png', height: 64.0),
+          centerTitle: true,
+        ),
+        bottomNavigationBar: const SafeArea(
+          child: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.home), text: '홈'),
+              Tab(icon: Icon((Icons.category)), text: '카테고리'),
+              Tab(icon: Icon(Icons.location_on_outlined), text: '글 쓰기'),
+              Tab(icon: Icon(Icons.person_outline), text: '마이페이지'),
+            ],
+            labelColor: Color(0xffFF6363),
+          ),
+        ),
+        body: Container(
+          color: Color(0xD3EEEEEE),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 7.8,),
+              Text(
+                '  최신 게시글',
+                style: TextStyle(
+                    fontSize: 35, fontWeight: FontWeight.bold
+                ),
               ),
-            ),
-            ListView(children: [
               Container(
-                color: Color(0xD3EEEEEE),
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(14),
                   child: Container(
+                    padding: const EdgeInsets.all(10),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                            offset: Offset(0, 10), // changes position of shadow
-                          )
-                        ]),
-                    // FutureBuilder 비동기 함수를 사용하고 난 후 새로고침을 위한 내용
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 10),
+                        )
+                      ],
+                    ),
                     child: FutureBuilder(
                       future: myBoards,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasData) {
                             List<dynamic> myboard =
-                                snapshot.data as List<dynamic>;
-                            // feedBox (한 페이지에 출력할 글 갯수, 글 List 형태)
-                            return feedBox(10, myboard);
+                            snapshot.data as List<dynamic>;
+                            return feedBox(5, myboard);
                           } else if (snapshot.hasError) {
-                            // 에러 처리
                             return Text('Error: ${snapshot.error}');
                           }
                         }
 
-                        // 로딩 중일 때 반환할 위젯
                         return CircularProgressIndicator();
                       },
                     ),
                   ),
                 ),
               ),
-            ]),
-            TabBarView(
-              children: [
-                Main(),
-                Category(),
-                Center(child: Text('page3')),
-                mypage(),
-              ],
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    Main(),
+                    Category(),
+                    Center(child: Text('page3')),
+                    mypage(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
