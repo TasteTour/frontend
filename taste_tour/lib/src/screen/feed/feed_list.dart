@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taste_tour/src/model/feed_model.dart';
 
 import '../../widget/feed_list_item.dart';
 
@@ -7,8 +8,8 @@ import '../../widget/feed_list_item.dart';
  */
 @Deprecated("어짜피 전부 box형태로 사용할 것 같아서 필요 없어질 것 같네요.")
 class FeedList extends StatelessWidget {
-  final List<dynamic> myBoards;
-  const FeedList(this.myBoards,{super.key});
+  final List<FeedModel> myBoards;
+  const FeedList(this.myBoards, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +22,10 @@ class FeedList extends StatelessWidget {
     );
   }
 
-  Widget buildPage(List<dynamic> items) {
+  Widget buildPage(List<FeedModel> boards) {
     return Column(
-      children: items.map((item) {
-        return FeedListItem(item: item);
+      children: boards.map((board) {
+        return FeedListItem(item: board);
       }).toList(),
     );
   }
