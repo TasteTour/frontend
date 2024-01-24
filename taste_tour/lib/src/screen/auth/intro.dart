@@ -71,7 +71,7 @@ class Intro extends StatelessWidget {
                         // 로그인을 클릭하면 로그인 창으로 이동
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const Home(),
+                            builder: (context) => const Login(),
                           ),
                         );
                       },
