@@ -40,6 +40,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('회원가입')),
       body: Container(
         color: const Color.fromRGBO(248, 248, 248, 1),
         child: Form(

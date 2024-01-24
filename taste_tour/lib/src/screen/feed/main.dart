@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:taste_tour/src/screen/feed/latest_feed.dart';
+import 'package:taste_tour/src/screen/feed/popularity_feed.dart';
 import 'package:taste_tour/src/widget/feed_list_item.dart';
 
 class Main extends StatefulWidget {
@@ -20,12 +22,25 @@ class _MainState extends State<Main> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '최신게시글',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                const Text(
+                  '최신게시글',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LatestFeed()));
+                  },
+                  icon: Icon(Icons.add_circle_outline),
+                ),
+              ],
             ),
             Stack(
               children: [
@@ -51,12 +66,25 @@ class _MainState extends State<Main> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              '인기게시글',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                const Text(
+                  '인기게시글',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PopularityFeed()));
+                  },
+                  icon: Icon(Icons.add_circle_outline),
+                ),
+              ],
             ),
             Stack(
               children: [
