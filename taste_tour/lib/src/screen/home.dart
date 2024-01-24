@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
             tabs: [
               Tab(icon: Icon(Icons.home), text: '홈'),
               Tab(icon: Icon((Icons.category)), text: '카테고리'),
-              Tab(icon: Icon(Icons.location_on_outlined), text: '글 쓰기'),
+              Tab(icon: Icon(Icons.feed), text: '글 쓰기'),
               Tab(icon: Icon(Icons.person_outline), text: '마이페이지'),
             ],
             labelColor: Color(0xffFF6363), // 선택된 탭의 색상

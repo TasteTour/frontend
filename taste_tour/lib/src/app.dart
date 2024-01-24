@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:taste_tour/src/screen/auth/intro.dart';
 import 'package:taste_tour/src/screen/feed/category.dart';
 import 'package:taste_tour/src/screen/auth/login.dart';
+import 'package:taste_tour/src/screen/feed/main.dart';
 import 'package:taste_tour/src/screen/mypage/update_password.dart';
 import 'package:taste_tour/src/screen/mypage/mypage.dart';
 import 'package:taste_tour/src/screen/home.dart';

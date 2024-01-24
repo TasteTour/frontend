@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
+import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/screen/feed/feed_detail.dart';
 import 'package:taste_tour/src/screen/feed/latest_feed.dart';
 import 'package:taste_tour/src/screen/feed/popularity_feed.dart';
 import 'package:taste_tour/src/widget/feed_list_item.dart';
+import 'package:taste_tour/src/widget/feed_list_popularity_item.dart';
 
 import '../../controller/feed_controller.dart';
 import '../../shared/global.dart';

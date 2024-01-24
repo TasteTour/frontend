@@ -45,11 +45,14 @@ class FeedConnect extends GetConnect {
     return body['data'];
   }
 
-  Future readBoardCategory(boardCategory) async {
-    Response response =
-        await get('/board/category', headers: {'boardCategory': boardCategory});
+  Future readBoardCategory(String boardCategory) async {
+    Response response = await get(
+      '/board/category/$boardCategory',
+      query: {'boardCategory': boardCategory},
+    );
 
     Map<String, dynamic> body = response.body;
+    print(body['message']);
 
     if (body['code'] != 200) {
       throw Exception(body['message']);
