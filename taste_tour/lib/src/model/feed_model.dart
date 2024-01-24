@@ -7,7 +7,7 @@ class FeedModel {
 
   int? boardNumber;
   String? boardTitle;
-  double? boardStar;
+  int? boardStar;
   String? boardCategory;
   String? boardStoreLocation;
   String? boardContent;

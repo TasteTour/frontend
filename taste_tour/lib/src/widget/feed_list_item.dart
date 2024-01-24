@@ -12,7 +12,7 @@ class FeedListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? boardTitle = item.boardTitle;
-    final double? boardStar = item.boardStar;
+    final int? boardStar = item.boardStar;
     final String? boardCategory = item.boardCategory;
     final String? boardStoreLocation = item.boardStoreLocation;
     final String? boardContent = item.boardContent;
