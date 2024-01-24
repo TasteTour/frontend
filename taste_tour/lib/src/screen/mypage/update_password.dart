@@ -1,40 +1,43 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:taste_tour/src/controller/user_controller.dart';
 import 'package:taste_tour/src/screen/home.dart';
-import 'package:flutter/src/painting/border_radius.dart';
 
-import '../mypage/mypage.dart';
+import 'mypage.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class update_password extends StatefulWidget {
+  const update_password({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<update_password> createState() => _update_passwordState();
 }
 
-class _LoginState extends State<Login> {
+class _update_passwordState extends State<update_password> {
   final userController = Get.put(UserController());
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _lastMemberPasswordController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final RegExp emailRegex =
-      RegExp(r'^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
 
-  // 로그인 완료 버튼을 누를 때 동작할 함수
+
+  // 변경 버튼을 누를 때 동작할 함수
   _submitForm() async {
     if (_formkey.currentState!.validate()) {
-      final String memberEmail = _emailController.text;
+      final String lastMemberPassword = _lastMemberPasswordController.text;
       final String memberPassword = _passwordController.text;
-      print("login" + memberEmail + memberPassword);
+
+      print("updatePassword " + lastMemberPassword + " " + memberPassword);
 
       // 로그인 통신 로직
-      bool result = await userController.login(memberEmail, memberPassword);
+      bool result = await userController.updatePassword(lastMemberPassword, memberPassword);
+      print(result);
 
       // 로그인 성공시 다음 화면 (메인)으로 이동처리
       if (result) {
-        // Get.offAll(() => const Home());
         Get.offAll(() => const mypage());
+        // Get.offAll(() => const Home());
+        // setState(() {});
       }
     }
   }
@@ -42,7 +45,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('로그인')),
       body: Container(
         color: Color.fromRGBO(248, 248, 248, 1),
         child: Form(
@@ -78,7 +80,7 @@ class _LoginState extends State<Login> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(40, 0, 0, 10),
                     child: const Text(
-                      '로그인',
+                      '비밀번호 변경',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -96,15 +98,15 @@ class _LoginState extends State<Login> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(40, 20, 40, 0),
                     child: TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
+                      controller: _lastMemberPasswordController,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         icon: Icon(
-                          Icons.email,
+                          Icons.lock,
                           color: Color.fromRGBO(255, 99, 99, 1),
                         ),
-                        labelText: '이메일',
+                        labelText: '현재 비밀번호',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 255, 165, 165)),
@@ -116,12 +118,13 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       validator: (value) {
+                        // 비어있는지 확인
                         if (value == null || value.isEmpty) {
-                          return '이메일을 입력하세요.';
+                          return '비밀번호를 입력하세요.';
                         }
-                        if (!emailRegex.hasMatch(value)) {
-                          return '이메일 형식이 올바르지 않습니다.';
-                        }
+                        // if (!emailRegex.hasMatch(value)) {
+                        //   return '이메일 형식이 올바르지 않습니다.';
+                        // }
                         return null;
                       },
                     ),
@@ -137,7 +140,7 @@ class _LoginState extends State<Login> {
                           Icons.lock,
                           color: Color.fromRGBO(255, 99, 99, 1),
                         ),
-                        labelText: '비밀번호',
+                        labelText: '변경할 비밀번호',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 255, 165, 165)),
@@ -161,7 +164,7 @@ class _LoginState extends State<Login> {
                         backgroundColor: const Color.fromRGBO(255, 99, 99, 1),
                       ),
                       child: const Text(
-                        '로그인',
+                        '변경',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

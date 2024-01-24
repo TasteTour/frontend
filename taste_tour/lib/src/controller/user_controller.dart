@@ -51,5 +51,18 @@ class UserController extends GetxController {
     }
   }
 
+  Future updatePassword(String lastMemberPassword, String memberPassword) async {
+    try {
+      // String result = await userConnection.updatePassword(lastMemberPassword, memberPassword);
+      await userConnection.updatePassword(lastMemberPassword, memberPassword);
+
+      return true;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
 
 }
