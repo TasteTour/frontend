@@ -6,6 +6,8 @@ import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/widget/feed_list_item.dart';
 import 'package:taste_tour/src/screen/mypage/update_password.dart';
 
+import '../../model/feed_model.dart';
+
 final GetStorage _storage = GetStorage();
 
 class mypage extends StatefulWidget {

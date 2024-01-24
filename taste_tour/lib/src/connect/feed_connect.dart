@@ -57,6 +57,30 @@ class FeedConnect extends GetConnect {
     return body['data'];
   }
 
+  //댓글 생성
+  Future commentCreate(int? boardNumber, String commentContent) async {
+    Response response = await post('/comment',
+        {'commentContent': commentContent, 'boardNumber': boardNumber}, headers: {'Authorization' : await getToken});
+    Map<String, dynamic> body = response.body;
+
+    print(body['code']);
+
+    if (body['code'] != 201) {
+      throw Exception(body['message']);
+    }
+    return 1;
+  }
+
+  Future commentRead(int? boardNumber) async {
+    Response response = await get('/comment/${boardNumber}', headers: {'Authorization' : await getToken});
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    return body['data'];
+  }
+
   storeItem(String boardTitle, double boardStar, String boardCategory,
       String boardStoreLocation, String boardContent,
       {int? imageId}) async {
