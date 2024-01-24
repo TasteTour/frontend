@@ -147,7 +147,7 @@ class _FeedDetailState extends State<FeedDetail> {
                           SizedBox(height: 15),
                           Text("작성자 : ${item.memberName}"),
                           Text("작성 날짜 : ${item.boardCreated}"),
-                          SizedBox(height: 15),
+                          SizedBox(height: 14),
                           Text("${item.boardContent}"),
                           SizedBox(height: 10),
                           ClipRRect(

@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/category_feed.dart';
+import 'package:taste_tour/src/screen/feed/feed_detail.dart';
 import 'package:taste_tour/src/screen/feed/search_feed.dart';
+
+import '../../shared/global.dart';
 
 class Category extends StatefulWidget {
   const Category({super.key});
@@ -17,6 +20,14 @@ class _CategoryState extends State<Category> {
   final feedController = Get.put(FeedController());
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _searchController = TextEditingController();
+  late Future<dynamic>? popularBoards;
+
+  @override
+  void initState() {
+    super.initState();
+    // initState에서 비동기 작업을 수행하고 변수에 할당
+    popularBoards = feedController.readPopularBoard();
+  }
 
   _submitForm() async {
     if (_formkey.currentState!.validate()) {
@@ -341,133 +352,171 @@ class _CategoryState extends State<Category> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.fromLTRB(20, 10, 10, 20),
-                width: double.infinity,
-                height: 229,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 13, 20, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Image.asset('asset/logo.png',
-                                          height: 70.0, width: 30.0),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      const Text(
-                                        '작성자',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        '제목',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      RatingBar.builder(
-                                        itemSize: 20,
-                                        itemBuilder: (Context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (rating) {},
-                                        direction: Axis.horizontal,
-                                        // 여기에 입력된 평점 수 알려주면 될 듯
-                                        initialRating: 3,
-                                        allowHalfRating: true,
-                                        ignoreGestures: true,
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Container(
-                                    child: const DefaultTextStyle(
-                                      child: Text(
-                                        '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    child: Image.asset(
-                                      'asset/logo.png',
-                                      height: 50.0,
-                                      width: 50.0,
-                                    ),
-                                  ),
-                                  // 자 이제 여러개면 어떻게 되어야할지 생각을 해야겠지?
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            height: 100,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 10, 1, 0),
-                                  child: Text(
-                                    '2024-01-24',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Color.fromARGB(255, 198, 198, 198),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+              Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
                   ),
-                ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 13, 20, 0),
+                    child: Column(
+                      children: [
+                        FutureBuilder(
+                          future: popularBoards,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              if (snapshot.hasData) {
+                                List<dynamic> board = snapshot.data as List<dynamic>;
+                                // feedBox (한 페이지에 출력할 글 갯수, 글 List 형태)
+                                return GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => FeedDetail(board[0])),
+                                    );
+                                  },
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.asset('asset/logo.png',
+                                                      height: 30.0, width: 30.0),
+                                                  SizedBox(
+                                                    width: 7,
+                                                  ),
+                                                  Text(
+                                                    '${board[0].memberName}',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    '${board[0].boardTitle}',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  RatingBar.builder(
+                                                    itemSize: 20,
+                                                    itemBuilder: (Context, _) => Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                    ),
+                                                    onRatingUpdate: (rating) {},
+                                                    direction: Axis.horizontal,
+                                                    // 여기에 입력된 평점 수 알려주면 될 듯
+                                                    initialRating: board[0].boardStar.toDouble(),
+                                                    allowHalfRating: true,
+                                                    ignoreGestures: true,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 6,
+                                              ),
+                                              Container(
+                                                height: 48,
+                                                child: DefaultTextStyle(
+                                                  child: Text(
+                                                    '${board[0].boardContent}',
+                                                  ),
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 6,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                child: Image.network(
+                                                    '${Global.apiRoot}/file/${board[0].boardNumber}',
+                                                    width: 50,
+                                                    height: 50,
+                                                    errorBuilder: (context, error, stackTrace) {
+                                                      return Image.asset(
+                                                          'asset/logo.png', width: 50,
+                                                          height: 50);
+                                                    }
+                                                ),
+                                              ),
+                                              // 자 이제 여러개면 어떻게 되어야할지 생각을 해야겠지?
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        height: 100,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.fromLTRB(0, 10, 1, 0),
+                                              child: Text(
+                                                '2024-01-24',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Color.fromARGB(255, 198, 198, 198),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                // 에러 처리
+                                return Text('Error: ${snapshot.error}');
+                              }
+                            }
+
+                            // 로딩 중일 때 반환할 위젯
+                            return Column(children: [
+                              Container(
+                                  width: 50, height: 50, child: CircularProgressIndicator())
+                            ]);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
