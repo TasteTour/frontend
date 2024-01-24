@@ -61,4 +61,24 @@ class FeedController extends GetxController {
       ));
     }
   }
+
+  /**
+   * return 잘 등록되면 1
+   */
+  Future commentCreate(int? boardNumber, String commentContent) async {
+    try{
+      feedConnection.commentCreate(boardNumber, commentContent).then((result){
+        print(result);
+        if(result == 1){
+          return 1;
+        }
+        else return 0;
+      });
+
+    }
+    catch(e){
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ));
+    }
+  }
 }

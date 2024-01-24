@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:taste_tour/src/model/feed_model.dart';
 
+import '../../controller/feed_controller.dart';
 import '../../shared/global.dart';
+
+final FeedController feedController = Get.put(FeedController());
 
 // TODO 사진이 없을 때, 댓글이 없을때 Container 높이 조정
 class FeedDetail extends StatefulWidget {
   final FeedModel item;
+
   const FeedDetail(this.item, {super.key});
 
   @override
@@ -16,6 +21,22 @@ class FeedDetail extends StatefulWidget {
 class _FeedDetailState extends State<FeedDetail> {
   final FeedModel item;
   _FeedDetailState(this.item);
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _commentContentController = TextEditingController();
+
+  void _submitForm() async {
+    //현재 폼에서 별다른 오류가 없을때
+    if (_formKey.currentState!.validate()) {
+      final String commentContent = _commentContentController.text;
+      //피드 작성 로직
+      await feedController.commentCreate(item.boardNumber, commentContent).then((result){
+        if (result == 1) {
+          Get.reloadAll();
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +72,14 @@ class _FeedDetailState extends State<FeedDetail> {
                       children: [
                         Row(
                           children: [
-                            Text("${item.boardTitle}",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                            Text("${item.boardTitle}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25)),
                             SizedBox(width: 30),
                             Container(
                               padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
-                              height: 20,width: 60,
+                              height: 20,
+                              width: 60,
                               decoration: BoxDecoration(
                                 color: Color.fromRGBO(255, 99, 99, 1),
                                 borderRadius: BorderRadius.circular(20),
@@ -94,8 +118,15 @@ class _FeedDetailState extends State<FeedDetail> {
                         SizedBox(height: 10),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network('${Global.apiRoot}/file/${item.boardNumber}', width: 100, height: 100, errorBuilder: (context, error, stackTrace) {
-                            return Image.network('${Global.apiRoot}/file/${item.boardNumber}', width: 100, height: 100);
+                          child: Image.network(
+                              '${Global.apiRoot}/file/${item.boardNumber}',
+                              width: 100,
+                              height: 100,
+                              errorBuilder: (context, error, stackTrace) {
+                            return Image.network(
+                                '${Global.apiRoot}/file/${item.boardNumber}',
+                                width: 100,
+                                height: 100);
                           }),
                         ),
                       ],
@@ -117,9 +148,20 @@ class _FeedDetailState extends State<FeedDetail> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${item.boardTitle}",style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),),
-                            SizedBox(height: 10,),
-                            Text("${item.boardStoreLocation}",style: TextStyle(fontSize: 15,),)
+                            Text(
+                              "${item.boardTitle}",
+                              style: TextStyle(
+                                  fontSize: 26, fontWeight: FontWeight.w800),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "${item.boardStoreLocation}",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            )
                           ],
                         ),
                         SizedBox(width: 25),
@@ -141,7 +183,7 @@ class _FeedDetailState extends State<FeedDetail> {
                 ),
                 SizedBox(height: 30),
                 Container(
-                  height: 250,
+                  height: 210,
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(25),
@@ -154,13 +196,43 @@ class _FeedDetailState extends State<FeedDetail> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${item.boardTitle}",style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),),
-                            SizedBox(height: 10,),
-                            Text("${item.boardStoreLocation}",style: TextStyle(fontSize: 15,),)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "댓글 작성하기",
+                                  style: TextStyle(
+                                      fontSize: 22, fontWeight: FontWeight.w800),
+                                ),
+                                SizedBox(width: 120),
+                                ElevatedButton(
+                                  onPressed: _submitForm,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xffFF6363),
+                                  ),
+                                  child: const Text(
+                                    '등록하기',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Form(key: _formKey, child: Container(
+                              width: 311,
+                              child: TextFormField(
+                                maxLines: 2,
+                                decoration: InputDecoration(border: OutlineInputBorder()),
+                                controller: _commentContentController,
+                              ),
+                            ),),
                           ],
                         ),
-                        SizedBox(width: 25),
-                        Image.asset('asset/map.png', height: 80.0, width: 80.0),
                       ],
                     ),
                   ),
@@ -175,11 +247,43 @@ class _FeedDetailState extends State<FeedDetail> {
                           offset: Offset(0, 10), // changes position of shadow
                         )
                       ]),
-                )
-              ],)
-          ]
-          ),)
-    );
+                ),
+                SizedBox(height: 30),
+                Container(
+                  height: 250,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "댓글",
+                          style: TextStyle(
+                              fontSize: 26, fontWeight: FontWeight.w800),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 10), // changes position of shadow
+                        )
+                      ]),
+                ),
+              ],
+            )
+          ]),
+        ));
   }
 }
-
