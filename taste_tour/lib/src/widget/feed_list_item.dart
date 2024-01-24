@@ -121,7 +121,7 @@ class FeedListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '작성자 : 잠시대기',
+                        '작성자 : ${item.memberName}',
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.black,

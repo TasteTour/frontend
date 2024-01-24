@@ -59,7 +59,6 @@ class FeedController extends GetxController {
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
       ));
-      return false;
     }
   }
 }

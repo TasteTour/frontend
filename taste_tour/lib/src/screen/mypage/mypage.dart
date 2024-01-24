@@ -18,7 +18,7 @@ class mypage extends StatefulWidget {
 
 class _mypageState extends State<mypage> {
   final feedController = Get.put(FeedController());
-  late List<FeedModel> ?myBoards;
+  late Future<dynamic> ?myBoards;
   int boardCount = 0;
 
   @override

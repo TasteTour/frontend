@@ -4,6 +4,7 @@ import 'package:taste_tour/src/model/feed_model.dart';
 
 import '../../shared/global.dart';
 
+// TODO 사진이 없을 때, 댓글이 없을때 Container 높이 조정
 class FeedDetail extends StatefulWidget {
   final FeedModel item;
   const FeedDetail(this.item, {super.key});
@@ -101,16 +102,66 @@ class _FeedDetailState extends State<FeedDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Container(
-                  height: 700,
+                  height: 130,
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(25),
-                    child: Column(
+                    child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${item.boardTitle}",style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),),
+                            SizedBox(height: 10,),
+                            Text("${item.boardStoreLocation}",style: TextStyle(fontSize: 15,),)
+                          ],
+                        ),
+                        SizedBox(width: 25),
+                        Image.asset('asset/map.png', height: 80.0, width: 80.0),
+                      ],
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 10), // changes position of shadow
+                        )
+                      ]),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  height: 250,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${item.boardTitle}",style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),),
+                            SizedBox(height: 10,),
+                            Text("${item.boardStoreLocation}",style: TextStyle(fontSize: 15,),)
+                          ],
+                        ),
+                        SizedBox(width: 25),
+                        Image.asset('asset/map.png', height: 80.0, width: 80.0),
+                      ],
                     ),
                   ),
                   decoration: BoxDecoration(
