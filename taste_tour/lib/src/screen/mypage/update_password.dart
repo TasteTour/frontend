@@ -24,10 +24,11 @@ class _update_passwordState extends State<update_password> {
       final String lastMemberPassword = _lastMemberPasswordController.text;
       final String memberPassword = _passwordController.text;
 
-      // print("updatePassword " + lastMemberPassword + " " + memberPassword);
+      print("updatePassword " + lastMemberPassword + " " + memberPassword);
 
       // 로그인 통신 로직
       bool result = await userController.updatePassword(lastMemberPassword, memberPassword);
+      print(result);
 
       // 로그인 성공시 다음 화면 (메인)으로 이동처리
       if (result) {
