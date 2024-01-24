@@ -52,9 +52,9 @@ class FeedListItem extends StatelessWidget {
                           ),
                           onRatingUpdate: (rating) {},
                           direction: Axis.horizontal,
-                          initialRating: boardStar.toDouble(),
+                          /* initialRating: boardStar.toDouble(),
                           // 여기에 입력된 평점 수 알려주면 될 듯
-                          initialRating: 3,
+                          initialRating: 3, */
                           allowHalfRating: true,
                           ignoreGestures: true,
                         )

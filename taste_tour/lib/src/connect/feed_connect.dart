@@ -3,7 +3,6 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-
 import '../shared/global.dart';
 
 final GetStorage _storage = GetStorage();
@@ -38,6 +37,18 @@ class FeedConnect extends GetConnect {
   Future readMyBoard() async {
     Response response = await get('/board/my/boards',
         headers: {'Authorization': await getToken});
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    return body['data'];
+  }
+
+  Future readBoardCategory(boardCategory) async {
+    Response response =
+        await get('/board/category', headers: {'boardCategory': boardCategory});
+
     Map<String, dynamic> body = response.body;
 
     if (body['code'] != 200) {
@@ -94,7 +105,7 @@ class FeedConnect extends GetConnect {
   void onInit() {
     allowAutoSignedCert = true;
     httpClient.baseUrl = Global.apiRoot;
-    httpClient.addRequestModifier<void>((request) {
+    httpClient.addRequestModifier<void>((request) async {
       request.headers['Authorization'] = await getToken;
       // Feed는 어차피 token 다 씀
       request.headers['Accept'] = 'application/json';

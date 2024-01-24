@@ -49,7 +49,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '한식'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -68,7 +76,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '양식'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -91,7 +107,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '일식'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -110,7 +134,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '아시안'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -133,7 +165,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '패스트푸드'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -152,7 +192,15 @@ class _CategoryState extends State<Category> {
                             height: 55.0,
                             width: 55.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryFeed(boardCategory: '기타'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
@@ -177,7 +225,15 @@ class _CategoryState extends State<Category> {
                               height: 55.0,
                               width: 55.0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CategoryFeed(boardCategory: '중식'),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                             ),

@@ -19,7 +19,6 @@ class FeedController extends GetxController {
         feeds.add(FeedModel.fromJson(iterator.current));
       }
       return feeds;
-
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
         content: Text("$e"),
@@ -59,7 +58,21 @@ class FeedController extends GetxController {
     }
   }
 
-  Future<bool> feedCreate(
+  Future readBoardCategory(boardCategory) async {
+    try {
+      List<dynamic> boards =
+          await feedConnection.readBoardCategory(boardCategory);
+      print(boards);
+      return boards;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+  /* Future<bool> feedCreate(
       String boardTitle,
       String boardContent,
       String boardStoreLocation,
@@ -85,6 +98,5 @@ class FeedController extends GetxController {
   Future<int> upload(String name, String path) async {
     Map data = await feedConnect.imageUpload(name, path);
     return data['id'];
-  }
-
+  } */
 }

@@ -42,21 +42,21 @@ class _CreateState extends State<Create> {
       // final String boardCategory = _boardCategoryController.text;
       print('별점: $boardStar');
       //피드 작성 로직
-      bool result = await feedController.feedCreate(boardTitle, boardContent,
+      /* bool result = await feedController.feedCreate(boardTitle, boardContent,
           boardStoreLocation, boardCategory, boardStar, fileid);
       if (result) {
         Get.back();
-      }
+      } */
     }
   }
 
   void uploadImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
-    int id = await feedController.upload(image.name, image.path);
+    /* int id = await feedController.upload(image.name, image.path);
     setState(() {
       fileid = id;
-    });
+    }); */
   }
 
   var inputDecoration = InputDecoration(border: OutlineInputBorder());
