@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // home: isLogin ? const Home(): const Intro()
-      // home: update_password(),
-      home: Category(),
-      // home: mypage(),
+      home: isLogin ? const Home(): const Intro()
     );
   }
 }

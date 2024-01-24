@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
           children: [
             Main(),
             Category(),
-            Center(child: Text('page3')),
+            Create(),
             mypage(),
           ],
         ),

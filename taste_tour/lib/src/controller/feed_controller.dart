@@ -98,6 +98,7 @@ class FeedController extends GetxController {
       await Future.delayed(Duration(seconds: 1));
 
       return comments;
+    }catch(e){
       return false;
     }
   }
@@ -123,10 +124,10 @@ Future<bool> feedCreate(
       double boardStar,
       int? imageId) async {
     try {
-      await feedConnect.storeItem(boardTitle, boardStar, boardCategory,
+      await feedConnection.storeItem(boardTitle, boardStar, boardCategory,
           boardStoreLocation, boardContent,
           imageId: imageId);
-      await feedConnect.imageUpload; //이미지 보내기 함수 확인하기
+      await feedConnection.imageUpload; //이미지 보내기 함수 확인하기
       //await Home(); //이동
       return true;
     } catch (e) {
@@ -139,7 +140,7 @@ Future<bool> feedCreate(
 
 //image upload 함수 확인
   Future<int> upload(String name, String path) async {
-    Map data = await feedConnect.imageUpload(name, path);
+    Map data = await feedConnection.imageUpload(name, path);
     return data['id'];
   }
 }
