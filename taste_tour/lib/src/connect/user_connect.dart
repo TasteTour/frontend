@@ -65,6 +65,21 @@ class UserConnect extends GetConnect {
     return body['data']['Authorization'];
   }
 
+  // 비밀번호 변경하기
+  Future updatePassword(String lastMemberPassword, String memberPassword) async {
+    Response response = await get('/user/mypage/change/password',
+        headers: {
+          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Im1lbWJlck51bWJlciI6MTMsIm1lbWJlck5hbWUiOiLsobDtmJXspIAifSwiaWF0IjoxNzA2MTA5MDEzLCJleHAiOjE3MDYxMzA2MTN9.iHB6U6rby-dq3eE6ALu9DzaO8MgbZvdE2jhK7oRwzNM',
+          'lastMemberPassword': lastMemberPassword, 'memberPassword': memberPassword });
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    print(body['data']);
+    // return body['data'];
+  }
+
   get getToken async {
     return _storage.read("access_token");
   }

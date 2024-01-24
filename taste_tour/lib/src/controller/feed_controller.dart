@@ -57,4 +57,6 @@ class FeedController extends GetxController {
       return false;
     }
   }
+
+
 }
