@@ -98,10 +98,48 @@ class FeedController extends GetxController {
       await Future.delayed(Duration(seconds: 1));
 
       return comments;
+      return false;
+    }
+  }
+
+  Future readBoardCategory(boardCategory) async {
+    try {
+      List<dynamic> boards =
+          await feedConnection.readBoardCategory(boardCategory);
+      print(boards);
+      return boards;
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
         content: Text("$e"),
       ));
     }
+  }
+
+Future<bool> feedCreate(
+      String boardTitle,
+      String boardContent,
+      String boardStoreLocation,
+      String boardCategory,
+      double boardStar,
+      int? imageId) async {
+    try {
+      await feedConnect.storeItem(boardTitle, boardStar, boardCategory,
+          boardStoreLocation, boardContent,
+          imageId: imageId);
+      await feedConnect.imageUpload; //이미지 보내기 함수 확인하기
+      //await Home(); //이동
+      return true;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+//image upload 함수 확인
+  Future<int> upload(String name, String path) async {
+    Map data = await feedConnect.imageUpload(name, path);
+    return data['id'];
   }
 }

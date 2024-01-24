@@ -1,6 +1,5 @@
 class FeedModel {
-  FeedModel(){
-  }
+  FeedModel() {}
 
   int? boardNumber;
   String? boardTitle;

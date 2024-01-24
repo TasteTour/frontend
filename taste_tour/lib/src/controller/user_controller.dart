@@ -28,7 +28,8 @@ class UserController extends GetxController {
       await _storage.write('access_token', token);
       return true;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
       ));
       return false;
     }
@@ -37,8 +38,24 @@ class UserController extends GetxController {
   // 로그인을 시도하는 함수, connect호출
   Future login(String memberEmail, String memberPassword) async {
     try {
-      String token = await userConnection.sendLogin(memberEmail, memberPassword);
+      String token =
+          await userConnection.sendLogin(memberEmail, memberPassword);
       await _storage.write('access_token', token);
+      print(_storage.read('access_token'));
+      return true;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
+      return false;
+    }
+  }
+
+  Future updatePassword(String lastMemberPassword, String memberPassword) async {
+    try {
+      // String result = await userConnection.updatePassword(lastMemberPassword, memberPassword);
+      await userConnection.updatePassword(lastMemberPassword, memberPassword);
+
       return true;
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),

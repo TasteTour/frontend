@@ -9,7 +9,7 @@ import '../../widget/feed_list_item.dart';
 @Deprecated("어짜피 전부 box형태로 사용할 것 같아서 필요 없어질 것 같네요.")
 class FeedList extends StatelessWidget {
   final List<FeedModel> myBoards;
-  const FeedList(this.myBoards,{super.key});
+  const FeedList(this.myBoards, {super.key});
 
   @override
   Widget build(BuildContext context) {

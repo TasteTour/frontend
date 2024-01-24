@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../shared/global.dart';
@@ -34,8 +36,8 @@ class UserConnect extends GetConnect {
         'memberPassword': memberPassword
       },
     );
-    Map<String, dynamic> body = response.body;
     print(response.bodyString);
+    Map<String, dynamic> body = response.body;
 
     _storage.write("memberName", body['data']['memberName']);
     _storage.write("memberEmail", body['data']['memberEmail']);
@@ -63,6 +65,24 @@ class UserConnect extends GetConnect {
       throw Exception(body['message']);
     }
     return body['data']['Authorization'];
+  }
+
+  // 비밀번호 변경하기
+  Future updatePassword(String lastMemberPassword, String memberPassword) async {
+    // print("get Token" + getToken);
+    Response response = await put('/user/mypage/change/password', {'lastMemberPassword': lastMemberPassword, 'memberPassword': memberPassword},
+      headers: {
+        'Authorization': await getToken,
+      },
+    );
+
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    print(body['data']);
+    // return body['data'];
   }
 
   get getToken async {
