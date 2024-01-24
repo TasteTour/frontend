@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taste_tour/src/connect/feed_connect.dart';
+import 'package:taste_tour/src/model/comment_model.dart';
 import 'package:taste_tour/src/model/feed_model.dart';
 
 final GetStorage _storage = GetStorage();
 
 class FeedController extends GetxController {
-
   final feedConnection = Get.put(FeedConnect());
 
   Future readLatestBoard() async {
@@ -20,9 +20,9 @@ class FeedController extends GetxController {
         feeds.add(FeedModel.fromJson(iterator.current));
       }
       return feeds;
-    }
-    catch(e){
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
       ));
       return false;
     }
@@ -38,9 +38,9 @@ class FeedController extends GetxController {
         feeds.add(FeedModel.fromJson(iterator.current));
       }
       return feeds;
-    }
-    catch(e){
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
       ));
       return false;
     }
@@ -57,7 +57,8 @@ class FeedController extends GetxController {
       }
       return feeds;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
       ));
     }
   }
@@ -66,18 +67,40 @@ class FeedController extends GetxController {
    * return 잘 등록되면 1
    */
   Future commentCreate(int? boardNumber, String commentContent) async {
-    try{
-      feedConnection.commentCreate(boardNumber, commentContent).then((result){
+    try {
+      feedConnection.commentCreate(boardNumber, commentContent).then((result) {
         print(result);
-        if(result == 1){
+        if (result == 1) {
           return 1;
-        }
-        else return 0;
+        } else
+          return 0;
       });
-
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
+      ));
     }
-    catch(e){
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("$e"),
+  }
+
+  /**
+   * return 잘 등록되면 1
+   */
+  Future commentRead(int? boardNumber) async {
+    try {
+      List<dynamic> results = await feedConnection.commentRead(boardNumber);
+      Iterator<dynamic> iterator = results.iterator;
+      List<CommentModel> comments = [];
+      while (iterator.moveNext()) {
+        // 각 리스트의 현재 요소 출력
+        comments.add(CommentModel.fromJson(iterator.current));
+      }
+      print(comments);
+      await Future.delayed(Duration(seconds: 1));
+
+      return comments;
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text("$e"),
       ));
     }
   }

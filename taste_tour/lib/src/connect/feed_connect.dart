@@ -41,7 +41,7 @@ class FeedConnect extends GetConnect {
   }
 
   //댓글 생성
-  Future commentCreate(int? boardNumber, String commentContent ) async {
+  Future commentCreate(int? boardNumber, String commentContent) async {
     Response response = await post('/comment',
         {'commentContent': commentContent, 'boardNumber': boardNumber}, headers: {'Authorization' : await getToken});
     Map<String, dynamic> body = response.body;
@@ -52,8 +52,18 @@ class FeedConnect extends GetConnect {
       throw Exception(body['message']);
     }
     return 1;
-    
   }
+
+  Future commentRead(int? boardNumber) async {
+    Response response = await get('/comment/${boardNumber}', headers: {'Authorization' : await getToken});
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    return body['data'];
+  }
+
   @override
   void onInit() {
     allowAutoSignedCert = true;
