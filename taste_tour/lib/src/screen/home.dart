@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taste_tour/src/screen/feed/feed_detail.dart';
 import 'package:taste_tour/src/screen/mypage/mypage.dart';
 
 import '../controller/feed_controller.dart';
@@ -89,7 +90,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ]),
-            Center(child: Text('page2')),
+            FeedDetail(),
             Center(child: Text('page3')),
             mypage()
           ],

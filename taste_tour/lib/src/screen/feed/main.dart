@@ -41,8 +41,7 @@ class _MainState extends State<Main> {
                   margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
                   child: Column(
                     children: [
-                      FeedListItem(),
-                      FeedListItem(),
+                      // TODO 추가하기
                     ],
                   ),
                 ),
