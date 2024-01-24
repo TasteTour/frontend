@@ -51,10 +51,5 @@ class UserController extends GetxController {
     }
   }
 
-  // 나의 정보를 가져오는 함수, connect호출
-  Future mypage() async {
-    Map map = await userConnection.getMyInfo();
-    UserModel parseUser = UserModel.fromJason(map);
-    user = parseUser;
-  }
+
 }

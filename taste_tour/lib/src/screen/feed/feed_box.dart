@@ -21,22 +21,19 @@ class feedBox extends StatelessWidget {
 
   Widget buildPages() {
     return Container(
-      height: onePageBoardCount * 120, // TODO 높이는 좀 조정해보세요
+      height: onePageBoardCount * 116, // TODO 높이는 좀 조정해보세요
       child: PageView.builder(
-        itemCount:
-            (myBoards.length / onePageBoardCount).ceil(), // 한 페이지에 5개씩 렌더링
+        itemCount: (myBoards.length / onePageBoardCount).ceil(), // 한 페이지에 5개씩 렌더링
         itemBuilder: (context, pageIndex) {
           int startIndex = pageIndex * onePageBoardCount;
-          int endIndex = (startIndex + onePageBoardCount < myBoards.length)
-              ? startIndex + onePageBoardCount
-              : myBoards.length;
+          int endIndex = (startIndex + onePageBoardCount < myBoards.length) ? startIndex + onePageBoardCount : myBoards.length;
 
           List<dynamic> pageItems = myBoards.sublist(startIndex, endIndex);
 
           return buildPage(pageItems);
         },
       ),
-    );
+    ); //TODO 넘어갈 버튼
   }
 
   Widget buildPage(List<dynamic> items) {

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:taste_tour/src/model/feed_model.dart';
 
 class FeedListItem extends StatelessWidget {
-  final dynamic item;
+  final FeedModel item;
+
   FeedListItem({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final String boardTitle = item['boardTitle'];
-    final int boardStar = item['boardStar'];
-    final String boardCategory = item['boardCategory'];
-    final String boardStoreLocation = item['boardStoreLocation'];
-    final String boardContent = item['boardContent'];
-    final int boardViews = item['boardViews'];
-    final String boardCreated = item['boardCreated'];
-    final int boardComment = item['boardComment'];
+    final String? boardTitle = item.boardTitle;
+    final int? boardStar = item.boardStar;
+    final String? boardCategory = item.boardCategory;
+    final String? boardStoreLocation = item.boardStoreLocation;
+    final String? boardContent = item.boardContent;
+    final int? boardViews = item.boardViews;
+    final String? boardCreated = item.boardCreated;
+    final int? boardComment = item.boardComment;
 
     return Column(
       children: [
@@ -38,6 +40,7 @@ class FeedListItem extends StatelessWidget {
                           ),
                         ),
                         //별점
+
                         SizedBox(
                           width: 10,
                         ),
@@ -50,6 +53,8 @@ class FeedListItem extends StatelessWidget {
                           onRatingUpdate: (rating) {},
                           direction: Axis.horizontal,
                           initialRating: boardStar.toDouble(),
+                          // 여기에 입력된 평점 수 알려주면 될 듯
+                          initialRating: 3,
                           allowHalfRating: true,
                           ignoreGestures: true,
                         )
