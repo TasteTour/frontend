@@ -1,50 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taste_tour/src/controller/feed_controller.dart';
 import 'package:taste_tour/src/screen/feed/category.dart';
 import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/screen/feed/main.dart';
-import 'package:taste_tour/src/screen/mypage/mypage.dart';
 
-class LatestFeed extends StatefulWidget {
-  const LatestFeed({super.key});
+import '../../controller/feed_controller.dart';
+import '../mypage/mypage.dart';
+
+class searchFeed extends StatefulWidget {
+  final String searchKeyword;
+  const searchFeed(this.searchKeyword, {super.key});
 
   @override
-  State<LatestFeed> createState() => _LatestFeedState();
+  State<searchFeed> createState() => _searchFeedState(this.searchKeyword);
 }
 
-class _LatestFeedState extends State<LatestFeed> {
+class _searchFeedState extends State<searchFeed> {
   final feedController = Get.put(FeedController());
   late Future<dynamic>? myBoards;
   int boardCount = 0;
+  final String searchKeyword;
+  _searchFeedState(this.searchKeyword);
 
   @override
   void initState() {
     super.initState();
     // initState에서 비동기 작업을 수행하고 변수에 할당
-    myBoards = feedController.readLatestBoard();
+    myBoards = feedController.searchBoard(searchKeyword);
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Image.asset('asset/logo.png', height: 64.0),
           centerTitle: true,
-        ),
-        bottomNavigationBar: const SafeArea(
-          child: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.home), text: '홈'),
-              Tab(icon: Icon((Icons.category)), text: '카테고리'),
-              Tab(icon: Icon(Icons.location_on_outlined), text: '글 쓰기'),
-              Tab(icon: Icon(Icons.person_outline), text: '마이페이지'),
-            ],
-            labelColor: Color(0xffFF6363),
-          ),
         ),
         body: Container(
           color: Color(0xD3EEEEEE),
@@ -53,7 +44,7 @@ class _LatestFeedState extends State<LatestFeed> {
             children: [
               SizedBox(height: 7.8,),
               Text(
-                '  최신 게시글',
+                '  검색 게시글',
                 style: TextStyle(
                     fontSize: 35, fontWeight: FontWeight.bold
                 ),
@@ -99,20 +90,9 @@ class _LatestFeedState extends State<LatestFeed> {
                   ),
                 ),
               ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    Main(),
-                    Category(),
-                    Center(child: Text('page3')),
-                    mypage(),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

@@ -316,7 +316,6 @@ class _FeedDetailState extends State<FeedDetail> {
 
                               // 로딩 중일 때 반환할 위젯
                               return Column(children: [
-                                const SizedBox(height: 50),
                                 Container(
                                     width: 50, height: 50, child: CircularProgressIndicator())
                               ]);

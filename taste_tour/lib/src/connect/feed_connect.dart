@@ -57,6 +57,17 @@ class FeedConnect extends GetConnect {
     return body['data'];
   }
 
+  Future searchBoard(searchKeyword) async {
+    Response response = await get('/board/search/${searchKeyword}');
+
+    Map<String, dynamic> body = response.body;
+
+    if (body['code'] != 200) {
+      throw Exception(body['message']);
+    }
+    return body['data'];
+  }
+
   //댓글 생성
   Future commentCreate(int? boardNumber, String commentContent) async {
     Response response = await post('/comment',
