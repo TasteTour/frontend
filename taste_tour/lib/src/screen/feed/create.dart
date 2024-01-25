@@ -45,22 +45,22 @@ class _CreateState extends State<Create> {
       //피드 작성 로직
       bool result = await feedController.feedCreate(boardTitle, boardContent,
           boardStoreLocation, boardCategory, boardStar, fileid);
-      if (result) {
         ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          content: Text("글 등록 되었습니다!"),
+          content: Text("글이 정상적으로 등록 되었습니다!"),
         ));
         Get.offAll(() => const Home());
-      }
+
     }
   }
 
   void uploadImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
-    /* int id = await feedController.upload(image.name, image.path);
+    print(image.name);
+    int id = await feedController.upload(image.name, image.path);
     setState(() {
       fileid = id;
-    }); */
+    });
   }
 
   var inputDecoration = InputDecoration(border: OutlineInputBorder());

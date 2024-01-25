@@ -21,6 +21,10 @@ class FeedConnect extends GetConnect {
     return body['data'];
   }
 
+  Future readDetailBoard(boardNumber) async {
+    Response response = await get('/board/detail/${boardNumber}', headers: {'Authorization': await getToken});
+  }
+
   // 인기순으로 글 불러오기
   Future readPopularBoard() async {
     Response response =
@@ -47,12 +51,11 @@ class FeedConnect extends GetConnect {
 
   Future readBoardCategory(String boardCategory) async {
     Response response = await get(
-      '/board/category/$boardCategory',
-      query: {'boardCategory': boardCategory},
+      '/board/category?boardCategory=$boardCategory',
     );
 
     Map<String, dynamic> body = response.body;
-    print(body['message']);
+    print(body);
 
     if (body['code'] != 200) {
       throw Exception(body['message']);
@@ -95,7 +98,7 @@ class FeedConnect extends GetConnect {
     return body['data'];
   }
 
-  storeItem(String boardTitle, double boardStar, String boardCategory,
+  Future storeItem(String boardTitle, double boardStar, String boardCategory,
       String boardStoreLocation, String boardContent,
       {int? imageId}) async {
     Response response = await post(
@@ -108,18 +111,21 @@ class FeedConnect extends GetConnect {
         'boardContent': boardContent,
         if (imageId != null) 'imageId': imageId,
       },
-    );
-    if (response.statusCode == null) throw Exception('통신 에러');
-    Map<String, dynamic> body = response.body;
-    if (body['code'] != 201) {
-      throw Exception(body['message']);
-    }
-    return body['message'];
+    ).then((value) {
+      Map<String, dynamic> body = value.body;
+      print(value.body);
+      print(body);
+      if (value.body['code'] != 201) {
+        throw Exception(value.body['message']);
+      }
+      return value.body['meszsage'];
+    } );
+
   }
 
   imageUpload(String name, String path) async {
     final form = FormData({'file': MultipartFile(path, filename: name)});
-    Response response = await post('/file/{boardNumber}', form);
+    Response response = await post('/file/45', form);
     if (response.statusCode == null) throw Exception('통신 에러');
     return response.body;
   }

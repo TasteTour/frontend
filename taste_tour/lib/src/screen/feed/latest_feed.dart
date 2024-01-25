@@ -7,6 +7,8 @@ import 'package:taste_tour/src/screen/feed/feed_box.dart';
 import 'package:taste_tour/src/screen/feed/main.dart';
 import 'package:taste_tour/src/screen/mypage/mypage.dart';
 
+import '../../model/feed_model.dart';
+
 class LatestFeed extends StatefulWidget {
   const LatestFeed({super.key});
 
@@ -24,6 +26,15 @@ class _LatestFeedState extends State<LatestFeed> {
     super.initState();
     // initState에서 비동기 작업을 수행하고 변수에 할당
     myBoards = feedController.readLatestBoard();
+  }
+
+  Future<void> _onRefresh() async {
+    List<FeedModel> boards = await feedController.readLatestBoard();
+    setState(() {
+      myBoards = Future.value(boards);
+      Get.reloadAll();
+      // 상태를 업데이트하여 UI를 갱신
+    });
   }
 
   @override
@@ -53,15 +64,19 @@ class _LatestFeedState extends State<LatestFeed> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 7.8,
+                height: 6,
               ),
-              Text(
-                '  최신 게시글',
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Text(
+                    '  최신 게시글',
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(14),
+                  padding: const EdgeInsets.all(9.5),
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,

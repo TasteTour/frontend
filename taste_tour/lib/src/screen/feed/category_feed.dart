@@ -65,7 +65,7 @@ class _CategoryFeedState extends State<CategoryFeed> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,
-                    height: 700,
+                    height: 600,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),
@@ -85,12 +85,16 @@ class _CategoryFeedState extends State<CategoryFeed> {
                           if (snapshot.hasData) {
                             List<dynamic> myboard =
                                 snapshot.data as List<dynamic>;
-                            return feedBox(4, myboard);
+                            return feedBox(5, myboard);
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           }
                         }
-                        return CircularProgressIndicator();
+                        return Column(children: [
+                          SizedBox(height: 50,),
+                          Container(
+                              width: 50, height: 50, child: CircularProgressIndicator())
+                        ]);
                       },
                     ),
                   ),

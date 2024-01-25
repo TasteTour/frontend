@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:taste_tour/src/connect/feed_connect.dart';
 import 'package:taste_tour/src/model/feed_model.dart';
 import 'package:taste_tour/src/screen/feed/feed_detail.dart';
 
 class FeedListItem extends StatelessWidget {
+  final feedConnection = Get.put(FeedConnect());
   final FeedModel item;
   FeedListItem({required this.item});
 
@@ -20,6 +23,7 @@ class FeedListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: (){
+        feedConnection.readDetailBoard(item.boardNumber);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => FeedDetail(item)),
@@ -59,7 +63,7 @@ class FeedListItem extends StatelessWidget {
                             onRatingUpdate: (rating) {},
                             direction: Axis.horizontal,
                             // 여기에 입력된 평점 수 알려주면 될 듯
-                            initialRating: 3,
+                            initialRating: item.boardStar.toDouble(),
                             allowHalfRating: true,
                             ignoreGestures: true,
                           )
@@ -71,7 +75,7 @@ class FeedListItem extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
                         height: 20,
-                        width: 60,
+                        width: 70,
                         decoration: BoxDecoration(
                           color: Color.fromRGBO(255, 99, 99, 1),
                           borderRadius: BorderRadius.circular(20),

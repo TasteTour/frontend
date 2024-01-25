@@ -5,6 +5,8 @@ import 'package:taste_tour/src/connect/feed_connect.dart';
 import 'package:taste_tour/src/model/comment_model.dart';
 import 'package:taste_tour/src/model/feed_model.dart';
 
+import '../screen/home.dart';
+
 final GetStorage _storage = GetStorage();
 
 class FeedController extends GetxController {
@@ -105,11 +107,16 @@ class FeedController extends GetxController {
 
   Future readBoardCategory(boardCategory) async {
     try {
-      List<dynamic> boards =
-          await feedConnection.readBoardCategory(boardCategory);
-      print(boards);
-      return boards;
-    } catch (e) {
+      List<dynamic> boards = await feedConnection.readBoardCategory(boardCategory);
+      Iterator<dynamic> iterator = boards.iterator;
+      List<FeedModel> feeds = [];
+      while (iterator.moveNext()) {
+        // 각 리스트의 현재 요소 출력
+        feeds.add(FeedModel.fromJson(iterator.current));
+      }
+      return feeds;
+    }
+    catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
         content: Text("$e"),
       ));
@@ -143,12 +150,10 @@ class FeedController extends GetxController {
           boardStoreLocation, boardContent,
           imageId: imageId);
       await feedConnection.imageUpload; //이미지 보내기 함수 확인하기
-      //await Home(); //이동
+
       return true;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        content: Text("$e"),
-      ));
+
       return false;
     }
   }
@@ -156,6 +161,6 @@ class FeedController extends GetxController {
 //image upload 함수 확인
   Future<int> upload(String name, String path) async {
     Map data = await feedConnection.imageUpload(name, path);
-    return data['id'];
+    return data['fileNumber'];
   }
 }
